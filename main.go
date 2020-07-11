@@ -1,35 +1,29 @@
 package main
 
 import (
+	"io"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello"))
-	})
+	var i ironman
+	var w wolverine
 
-	http.HandleFunc("/about", aboutHandler)
-	http.HandleFunc("/index", indexHandler)
-	http.HandleFunc("/userData", userData)
+	mux := http.NewServeMux()
+	mux.Handle("/ironman", i)
+	mux.Handle("/wolverine", w)
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", mux)
 }
 
-func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("About Page"))
-	w.WriteHeader(http.StatusOK)
+type ironman int
+
+func (x ironman) ServeHTTP(res http.ResponseWriter, r *http.Request) {
+	io.WriteString(res, "Mr. Iron!")
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("index Page"))
-	w.WriteHeader(http.StatusOK)
-}
+type wolverine int
 
-func userData(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("userInfo Page"))
-
-	x := r.URL.Path
-	w.Write([]byte(x))
-
+func (x wolverine) ServeHTTP(res http.ResponseWriter, r *http.Request) {
+	io.WriteString(res, "Mr. Wolverine!")
 }
