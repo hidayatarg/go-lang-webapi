@@ -23,6 +23,8 @@ func main() {
 	mux.Handle("/wolverine", w)
 	log.Println("Listening Port: 8080")
 
+	http.HandleFunc("/search", search)
+
 	http.ListenAndServe(":8080", mux)
 }
 
@@ -44,4 +46,9 @@ type messageHandler struct {
 
 func (x *messageHandler) ServeHTTP(res http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(res, x.message)
+}
+
+func search(res http.ResponseWriter, r *http.Request)  {
+	h1 := r.FormValue("h1")
+	io.WriteString(res, "The Parameter: " + h1)
 }
