@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	//helpers "./utils"
+	helpers "./utils"
 
 )
 
@@ -37,4 +37,21 @@ func register (w http.ResponseWriter, r *http.Request){
 	pwdConfirm := r.FormValue("passwordConfirm")
 
 	fmt.Printf("%s\n%s\n%s\n%s\n", username, email, pwd, pwdConfirm)
+
+	if helpers.IsEmpty(username) ||
+		helpers.IsEmpty(email) ||
+		helpers.IsEmpty(pwd) ||
+		helpers.IsEmpty(pwdConfirm){
+		// for long in console
+		log.Println("There is Empty Data")
+		// result
+		fmt.Fprintln(w, "There is Empty Data")
+	}
+
+	// check the password
+	if pwd == pwdConfirm {
+		fmt.Fprintf(w, "Registration Successful!")
+	}else {
+		fmt.Fprintf(w, "Password Does not Match")
+	}
 }
