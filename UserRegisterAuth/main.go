@@ -31,9 +31,10 @@ func index (w http.ResponseWriter, r *http.Request){
 
 func register (w http.ResponseWriter, r *http.Request){
 	r.ParseForm()
+	username := r.FormValue("username")
+	email := r.FormValue("email")
+	pwd := r.FormValue("password")
+	pwdConfirm := r.FormValue("passwordConfirm")
 
-	for key, value := range r.Form {
-		fmt.Printf("%s = %s\n", key, value)
-	}
-	//fmt.Printf("it is working")
+	fmt.Printf("%s\n%s\n%s\n%s\n", username, email, pwd, pwdConfirm)
 }
