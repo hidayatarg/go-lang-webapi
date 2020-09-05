@@ -46,11 +46,13 @@ func register (w http.ResponseWriter, r *http.Request){
 		log.Println("There is Empty Data")
 		// result
 		fmt.Fprintln(w, "There is Empty Data")
+		return
 	}
 
 	// check the password
 	if pwd == pwdConfirm {
 		fmt.Fprintf(w, "Registration Successful!")
+		// add to the db
 	}else {
 		fmt.Fprintf(w, "Password Does not Match")
 	}
