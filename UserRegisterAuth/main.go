@@ -22,7 +22,29 @@ func main() {
 }
 
 func login (w http.ResponseWriter, r *http.Request){
+	r.ParseForm()
+	email := r.FormValue("email")
+	pwd := r.FormValue("password")
 
+	// validation
+	if  helpers.IsEmpty(email) ||
+		helpers.IsEmpty(pwd){
+		// for long in console
+		log.Println("There is Empty Data")
+		// result
+		fmt.Fprintln(w, "There is Empty Data")
+		return
+	}
+
+	// data from database
+	dbEmail := "abc@abc.com"
+	dbPwd := "12345!"
+
+	if email == dbEmail && pwd == dbPwd {
+		fmt.Fprintln(w, "Login In Successfully")
+	} else {
+		fmt.Fprintln(w, "Login Failed! Wrong Credintials")
+	}
 }
 
 func index (w http.ResponseWriter, r *http.Request){
