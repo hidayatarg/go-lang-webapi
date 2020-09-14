@@ -9,9 +9,10 @@ import (
 
 func Connect() {
 	opts := &pg.Options{
-		User: "",
+		User:     "",
 		Password: "",
-		Addr: "",
+		Addr:     "",
+		Database: "",
 	}
 
 	var db *pg.DB = pg.Connect(opts)
@@ -20,6 +21,8 @@ func Connect() {
 		os.Exit(100)
 	}
 	log.Printf("Connected to database successfully.\n")
+	// Create database
+	CreateProdItemsTable(db)
 	closeErr := db.Close()
 	if closeErr != nil {
 		log.Printf("Error while closing the connection, Reason: %v\n", closeErr)
@@ -27,6 +30,5 @@ func Connect() {
 	}
 	log.Printf("Connection closed successfully.\n")
 	return
-
 
 }
